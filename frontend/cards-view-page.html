@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title> Card Builder </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"> UFC Card Builder </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Cards </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fighters"> Fighters </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fights"> Fights </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="display: block; text-align: center; margin-top: 10px; margin-bottom: 30px; width: 90%; margin: auto;">
+        View Fight Card </h1>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Event Name: </h4>
+        <p id="event-name" style="text-align: center;"> Temp Card </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Event Location: </h4>
+        <p id="event-location" style="text-align: center;"> Temp Location </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Card Type: </h4>
+        <p id="card-type" style="text-align: center;"> Temp Type </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Event Date: </h4>
+        <p id="event-date" style="text-align: center;"> Temp Date </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Main Card: </h4>
+        <div id="main-card"> </div>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Preliminary Card: </h4>
+        <div id="prelim-card"> </div>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Early Preliminary Card: </h4>
+        <div id="early-prelim-card"> </div>
+    </div>
+
+    <div style="margin-top: 70px;"> </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let url = window.location.href;
+        let urlParts = url.split('/');
+        let cardID = urlParts[urlParts.length - 1];
+
+        async function getCardInfo() {
+            try {
+                const {
+                    data: { card }
+                } = await axios.get(`/cards/${cardID}`);
+
+                console.log(card.cardType);
+
+                document.getElementById('event-name').textContent = card.eventName;
+                document.getElementById('event-location').textContent = card.eventLocation;
+                document.getElementById('card-type').textContent = card.cardType;
+
+                let cardDate = card.eventDate.toString();
+                cardDate = cardDate.substring(0, 10);
+                let dateInfo = cardDate.split('-');
+                document.getElementById('event-date').textContent = `${dateInfo[1]}/${dateInfo[2]}/${dateInfo[0]}`;
+
+                for (let i = 0; i < card.mainCard.length; i++) {
+                    const {
+                        data: { fight }
+                    } = await axios.get(`/getfights/${card.mainCard[i]}`);
+
+                    addFightSection(fight, 0);
+                }
+
+                for (let i = 0; i < card.prelimCard.length; i++) {
+                    const {
+                        data: { fight }
+                    } = await axios.get(`/getfights/${card.prelimCard[i]}`);
+
+                    addFightSection(fight, 1);
+                }
+
+                for (let i = 0; i < card.earlyPrelimCard.length; i++) {
+                    const {
+                        data: { fight }
+                    } = await axios.get(`/getfights/${card.earlyPrelimCard[i]}`);
+
+                    addFightSection(fight, 2);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function addFightSection(fight, cardSectionNumber) {
+            try {
+                console.log(fight);
+                let redFighter = await axios.get(`/getfighters/${fight.redCorner}`);
+                redFighter = redFighter.data.fighter;
+
+                let blueFighter = await axios.get(`/getfighters/${fight.blueCorner}`);
+                blueFighter = blueFighter.data.fighter;
+
+                const redFighterName = `${redFighter.firstName} ${redFighter.lastName}`;
+                const blueFighterName = `${blueFighter.firstName} ${blueFighter.lastName}`;
+                const fightName = `${redFighterName} vs. ${blueFighterName}`;
+
+                let tempCard = document.createElement('div');
+                tempCard.innerHTML = `<div class="card-body" data-id="${fight._id}">
+                                            <h5 class="card-title"> ${fightName} </h5>
+                                            <p class="card-text"> ${fight.weightClass} Bout </p>
+                                            <a href="/viewfight/${fight._id}" class="card-link">View</a>`;
+
+                tempCard.className = 'card';
+                tempCard.style.width = '22rem';
+                tempCard.style.display = 'block';
+                tempCard.style.margin = 'auto';
+                tempCard.style.marginBottom = '20px';
+
+                if (cardSectionNumber === 0) {
+                    document.getElementById('main-card').appendChild(tempCard);
+                }
+                else if (cardSectionNumber === 1) {
+                    document.getElementById('prelim-card').appendChild(tempCard);
+                } 
+                else {
+                    document.getElementById('early-prelim-card').appendChild(tempCard);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        getCardInfo();
+    </script>
+</body>
+
+</html>

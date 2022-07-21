@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title> Card Builder </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"> UFC Card Builder </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Cards </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fighters"> Fighters </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fights"> Fights </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="display: block; text-align: center; margin-top: 10px;"> Edit Fighter </h1>
+
+    <form class="needs-validation" style="margin-top: 15px;">
+        <div class="mb-3" style="width: 90%; margin: auto;">
+            <label for="firstName" class="form-label"> First Name: </label>
+            <input type="text" class="form-control" id="firstName" maxlength="100">
+            <div style="color: red; display: none" id="first-name-error">
+                Please provide the first name of this fighter
+            </div>
+        </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px">
+            <label for="lastName" class="form-label"> Last Name: </label>
+            <input type="text" class="form-control" id="lastName" maxlength="100">
+            <div style="color: red; display: none" id="last-name-error">
+                Please provide the last name of this fighter
+            </div>
+        </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px">
+            <label for="nickname" class="form-label"> Nickname: </label>
+            <input type="text" class="form-control" id="nickname" maxlength="100">
+        </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px">
+            <label for="ufc-stats" class="form-label"> Fighter UFC Stats page: </label>
+            <input type="text" class="form-control" id="ufc-stats" maxlength="100">
+        </div>
+
+        <div class="mb-3"
+            style="width: 90%; margin: auto; display: flex; justify-content: space-around; flex-wrap: wrap;">
+
+            <div style="margin-top: 30px;">
+                <p> Wins: </p>
+                <input type="number" class="form-control" id="wins" style="width: 100px;" min="0">
+                <div style="color: red;" id="wins-error"></div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <p> Losses: </p>
+                <input type="number" class="form-control" id="losses" style="width: 100px;" min="0">
+                <div style="color: red;" id="losses-error"></div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <p> Draws: </p>
+                <input type="number" class="form-control" id="draws" style="width: 100px;" min="0">
+                <div style="color: red;" id="draws-error"></div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <p> No Contests: </p>
+                <input type="number" class="form-control" id="no-contests" style="width: 100px;" min="0">
+                <div style="color: red;" id="no-contests-error"></div>
+            </div>
+        </div>
+
+        <div class="mb-3"
+            style="width: 90%; margin: auto; display: flex; justify-content: space-around; flex-wrap: wrap;">
+
+            <div style="margin-top: 30px;">
+                <select class="form-select" id="gender" aria-label="Default select example">
+                    <option value="1">Select Gender</option>
+                    <option value="2">Male</option>
+                    <option value="3">Female</option>
+                </select>
+                <div style="color: red; display: none;" id="gender-error">Please provide a gender</div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <select class="form-select" id="weight-class" aria-label="Default select example">
+                    <option value="1">Select Weight Class</option>
+                    <option value="2" id="SW">Strawweight</option>
+                    <option value="3" id="FLY">Flyweight</option>
+                    <option value="4" id="BW">Bantamweight</option>
+                    <option value="5" id="FW">Featherweight</option>
+                    <option value="6" id="LW">Lightweight</option>
+                    <option value="7" id="WW">Welterweight</option>
+                    <option value="8" id="MW">Middleweight</option>
+                    <option value="9" id="LHW">Light Heavyweight</option>
+                    <option value="10" id="HW">Heavyweight</option>
+                </select>
+                <div style="color: red; display: none;" id="weight-class-error">Please provide a weight class</div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <select class="form-select" id="ranking" aria-label="Default select example">
+                    <option value="1">Select Ranking</option>
+                    <option value="2">Ranked</option>
+                    <option value="3">Unranked</option>
+                </select>
+                <div style="color: red; display: none;" id="rank-error">Please provide a ranking</div>
+            </div>
+        </div>
+    </form>
+
+    <div style="margin: auto; margin-top: 30px; width: 90%;">
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="submitCard"
+            onclick="submitted()">Edit Fighter</button>
+    </div>
+
+    <div style="margin: auto; margin-top: 20px; width: 90%; color: green; text-align: center; display: none;"
+        id="success-message">
+        This fighter has been sucessfully updated!
+    </div>
+
+    <div style="height: 50px;"></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+<script>
+    let url = window.location.href;
+    let urlParts = url.split('/');
+    let fighterID = urlParts[urlParts.length - 1];
+
+    async function prefillData() {
+        try {
+            const {
+                data: { fighter }
+            } = await axios.get(`/getfighters/${fighterID}`);
+
+            console.log(fighter);
+
+            document.getElementById('firstName').value = fighter.firstName;
+            document.getElementById('nickname').value = fighter.nickname;
+            document.getElementById('lastName').value = fighter.lastName;
+            document.getElementById('ufc-stats').value = fighter.ufcStats;
+            document.getElementById('wins').value = fighter.wins.toString();
+            document.getElementById('losses').value = fighter.losses.toString();
+            document.getElementById('draws').value = fighter.draws.toString();
+            document.getElementById('no-contests').value = fighter.noContests.toString();
+
+            if (fighter.gender === "Male") {
+                document.getElementById('gender').selectedIndex = 1;
+            }
+            else {
+                document.getElementById('gender').selectedIndex = 2;
+            }
+
+            if (fighter.isRanked === true) {
+                document.getElementById('ranking').selectedIndex = 1;
+            }
+            else {
+                document.getElementById('ranking').selectedIndex = 2;
+            }
+
+            let weights = ["Strawweight", "Flyweight", "Bantamweight", "Featherweight", "Lightweight", "Welterweight", "Middleweight", "Light Heavyweight", "Heavyweight"];
+
+            for (let i = 0; i < weights.length; i++) {
+                if (fighter.weightClass === weights[i]) {
+                    document.getElementById('weight-class').selectedIndex = i + 1;
+                    break;
+                }
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    prefillData();
+
+    function processNumericInput(input) {
+        let result = Number(input);
+
+        if (result < 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function submitted() {
+        let readyToAdd = true;
+
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        let nickname = document.getElementById('nickname').value;
+        let ufcStats = document.getElementById('ufc-stats').value;
+        let wins = document.getElementById('wins').value;
+        let losses = document.getElementById('losses').value;
+        let draws = document.getElementById('draws').value;
+        let noContests = document.getElementById('no-contests').value;
+
+        let gender = document.getElementById('gender');
+        let genderData = gender.options[gender.selectedIndex].text;
+
+        let weightClass = document.getElementById('weight-class');
+        let weightClassData = weightClass.options[weightClass.selectedIndex].text;
+
+        let isRanked = document.getElementById('ranking');
+        let isRankedData = isRanked.options[isRanked.selectedIndex].text;
+
+        let data = {
+            firstName: firstName,
+            lastName: lastName,
+            nickname: nickname,
+            ufcStats: ufcStats,
+            wins: wins,
+            losses: losses,
+            draws: draws,
+            noContests: noContests,
+            gender: genderData,
+            weightClass: weightClassData,
+            isRanked: isRankedData
+        }
+
+        if (ufcStats.trim === '') {
+            ufcStats = '';
+        }
+
+        if (nickname.trim() === '') {
+            nickname = '';
+        }
+
+        if (firstName.trim() === '') {
+            document.getElementById('first-name-error').style.display = 'block';
+            readyToAdd = false;
+        }
+        else {
+            document.getElementById('first-name-error').style.display = 'none';
+        }
+
+        if (lastName.trim() === '') {
+            document.getElementById('last-name-error').style.display = 'block';
+            readyToAdd = false;
+        }
+        else {
+            document.getElementById('last-name-error').style.display = 'none';
+        }
+
+        if (wins === '') {
+            document.getElementById('wins-error').textContent = 'Please provide the number of wins';
+            readyToAdd = false;
+        }
+        else {
+            document.getElementById('wins-error').textContent = '';
+            data.wins = Math.abs(Number(wins));
+        }
+
+        if (losses === '') {
+            document.getElementById('losses-error').textContent = 'Please provide the number of losses';
+            readyToAdd = false;
+        }
+        else {
+            document.getElementById('losses-error').textContent = '';
+            data.losses = Math.abs(Number(losses));
+        }
+
+        if (draws !== "") {
+            document.getElementById('draws-error').textContent = '';
+            data.draws = Math.abs(Number(draws));
+        }
+
+        if (noContests !== "") {
+            document.getElementById('no-contests-error').textContent = '';
+            data.noContests = Math.abs(Number(noContests));
+        }
+
+        if (genderData === 'Select Gender') {
+            document.getElementById('gender-error').style.display = 'block';
+            data.gender = '';
+            readyToAdd = false;
+        }
+        else {
+            document.getElementById('gender-error').style.display = 'none';
+        }
+
+        if (weightClassData === 'Select Weight Class') {
+            document.getElementById('weight-class-error').style.display = 'block';
+            data.weightClass = '';
+            readyToAdd = false;
+        }
+        else {
+            document.getElementById('weight-class-error').style.display = 'none';
+        }
+
+        if (isRankedData === 'Select Ranking') {
+            document.getElementById('rank-error').style.display = 'block';
+            data.isRanked = '';
+            readyToAdd = false;
+        }
+        else {
+            document.getElementById('rank-error').style.display = 'none';
+            data.isRanked = isRankedData === 'Ranked' ? true : false;
+        }
+
+        if (readyToAdd === true) {
+            //console.log(data);
+            editFighter(data);
+
+            document.getElementById('success-message').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('success-message').style.display = 'none';
+            }, 3000);
+        }
+
+        console.log(data);
+    }
+
+    async function editFighter(submission) {
+        try {
+            console.log(submission);
+            await axios.patch(`/editfighter/${fighterID}`, submission);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+</script>
+
+</html>

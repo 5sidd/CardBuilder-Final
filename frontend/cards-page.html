@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="frontend/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title> Card Builder </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"> UFC Card Builder </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Cards </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fighters"> Fighters </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fights"> Fights </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="beginning"
+        style="margin-top: 3%; height: auto; display: flex; flex-wrap: wrap; justify-content: space-around;">
+        <div class="add-card" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary" style="margin-top: 15%; text-align: center;"
+                onclick="location.href = '/addcard'">
+                Add
+                Card </button>
+        </div>
+
+        <div class="filters" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="margin-top: 15%; text-align: center;">
+                Apply Filters
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="px-4 py-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="isPPV">
+                        <label class="form-check-label" for="dropdownCheck">
+                            PPV
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="isNonPPV">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Non-PPV
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="newest-to-oldest"
+                            onchange="handleSortChange()">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Newest to Oldest
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="oldest-to-newest"
+                            onchange="handleSortChange()">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Oldest To Newest
+                        </label>
+                    </div>
+
+                    <div>
+                        <input type="text" class="form-control" id="event-name-search" placeholder="Event Name"
+                            style="margin-top: 15px;" maxlength="100">
+                    </div>
+
+                    <div>
+                        <input type="text" class="form-control" id="location-search" placeholder="Location"
+                            style="margin-top: 15px;" maxlength="100">
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-primary" style=" margin-left: 15px;" onclick="reset()"> Apply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cards-display" style="margin-top: 25px; display: flex; justify-content: space-around; flex-wrap: wrap;">
+    </div>
+
+    <div style="width: 90%; margin: auto; text-align: center;">
+        <p id="page-tracker" style="margin-top: 70px;"> </p>
+        <button class="btn btn-primary" onclick="previousPage()"> Previous Page </button>
+        <button class="btn btn-primary" onclick="nextPage()"> Next Page </button>
+    </div>
+
+    <div style="margin-top: 50px;"> </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let cardsDisplay = document.querySelector('.cards-display');
+        let currentPage = 1;
+
+        function handleSortChange() {
+            if (document.getElementById('newest-to-oldest').checked === true) {
+                document.getElementById('oldest-to-newest').disabled = true;
+            }
+            else {
+                document.getElementById('oldest-to-newest').disabled = false;
+            }
+
+            if (document.getElementById('oldest-to-newest').checked === true) {
+                document.getElementById('newest-to-oldest').disabled = true;
+            }
+            else {
+                document.getElementById('newest-to-oldest').disabled = false;
+            }
+        }
+
+        function getQueryParameters() {
+            let queryString = '';
+
+            if (document.getElementById('isPPV').checked === true) {
+                if (queryString === '') {
+                    queryString = 'cardType=PPV';
+                }
+                else {
+                    queryString = queryString + '&cardType=PPV';
+                }
+            }
+
+            if (document.getElementById('isNonPPV').checked === true) {
+                if (queryString === '') {
+                    queryString = 'cardType=Non-PPV';
+                }
+                else {
+                    queryString = queryString + '&cardType=Non-PPV';
+                }
+            }
+
+            if (document.getElementById('newest-to-oldest').checked === true) {
+                if (queryString === '') {
+                    queryString = 'newestToOldest=true';
+                }
+                else {
+                    queryString = queryString + '&newestToOldest=true';
+                }
+            }
+
+            if (document.getElementById('oldest-to-newest').checked === true) {
+                if (queryString === '') {
+                    queryString = 'oldestToNewest=true';
+                }
+                else {
+                    queryString = queryString + '&oldestToNewest=true';
+                }
+            }
+
+            if (document.getElementById('event-name-search').value.trim() !== '') {
+                if (queryString === '') {
+                    queryString = `cardName=${document.getElementById('event-name-search').value}`;
+                }
+                else {
+                    queryString = queryString + `&cardName=${document.getElementById('event-name-search').value}`;
+                }
+            }
+
+            if (document.getElementById('location-search').value.trim() !== '') {
+                if (queryString === '') {
+                    queryString = `cardLocation=${document.getElementById('location-search').value}`;
+                }
+                else {
+                    queryString = queryString + `&cardLocation=${document.getElementById('location-search').value}`;
+                }
+            }
+
+            return queryString;
+        }
+
+        async function getCards() {
+            let queryString = getQueryParameters();
+
+            try {
+                const {
+                    data: { cards }
+                } = await axios.get(`/cards?${queryString}`);
+
+                //console.log(cards);
+
+                cardsDisplay.innerHTML = '';
+
+                if (Math.ceil(cards.length / 15) < currentPage) {
+                    currentPage = Math.ceil(cards.length / 15);
+                }
+
+                if (currentPage < 1) {
+                    currentPage = 1;
+                }
+
+                if (cards.length === 0) {
+                    document.getElementById('page-tracker').textContent = 'No results to display';
+                    document.getElementById('page-tracker').style.color = 'red';
+                }
+                else {
+                    document.getElementById('page-tracker').textContent = `Page ${currentPage} of ${Math.ceil(cards.length / 15)}`;
+                    document.getElementById('page-tracker').style.color = 'black';
+                }
+
+                let startIndex = (currentPage - 1) * 15;
+                for (let i = startIndex; i < startIndex + 15; i++) {
+                    const cardData = cards[i];
+                    const { _id: cardID } = cards[i];
+                    console.log(cardID);
+                    let cardDate = cards[i].eventDate.toString();
+                    cardDate = cardDate.substring(0, 10);
+                    let dateInfo = cardDate.split('-');
+
+                    let tempCard = document.createElement('div');
+                    tempCard.innerHTML = `<div class="card-body" data-id="${cardID}">
+                                            <h5 class="card-title"> ${cardData.eventName} </h5>
+                                            <h6 class="card-subtitle mb-2 text-muted"> ${dateInfo[1]}/${dateInfo[2]}/${dateInfo[0]} </h6>
+                                            <p class="card-text"> ${cardData.eventLocation} </p>
+                                            <a href="/viewcard/${cardID}" class="card-link">View</a>
+                                            <a href="/editcard/${cardID}" class="card-link">Edit</a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                                onclick="deleteCard(this.parentElement)"> Delete </button>
+                                            </div>`;
+
+                    tempCard.className = 'card';
+                    tempCard.style.width = '22rem';
+                    tempCard.style.display = 'block';
+                    tempCard.style.marginBottom = '20px';
+                    cardsDisplay.appendChild(tempCard);
+                }
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+
+        getCards();
+
+        function previousPage() {
+            currentPage = currentPage - 1;
+            getCards();
+        }
+
+        function nextPage() {
+            currentPage = currentPage + 1;
+            getCards();
+        }
+
+        function reset() {
+            currentPage = 1;
+            getCards();
+        }
+
+        async function deleteCard(node) {
+            try {
+                let cardID = node.getAttribute('data-id');
+                let deletedCard = await axios.delete(`/cards/${cardID}`);
+                deletedCard = deletedCard.data.card;
+
+                for (let i = 0; i < deletedCard.mainCard.length; i++) {
+                    await axios.patch(`/editfight/${deletedCard.mainCard[i]}`, { isAssigned: false, assignedCard: '' });
+                }
+
+                for (let i = 0; i < deletedCard.prelimCard.length; i++) {
+                    await axios.patch(`/editfight/${deletedCard.prelimCard[i]}`, { isAssigned: false, assignedCard: '' });
+                }
+
+                for (let i = 0; i < deletedCard.earlyPrelimCard.length; i++) {
+                    await axios.patch(`/editfight/${deletedCard.earlyPrelimCard[i]}`, { isAssigned: false, assignedCard: '' });
+                }
+
+                //getCards();
+                node.parentElement.remove();
+                currentPage = 1;
+                getCards();
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="frontend/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title> Card Builder </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"> UFC Card Builder </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Cards </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fighters"> Fighters </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fights"> Fights </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="beginning"
+        style="margin-top: 3%; height: auto; display: flex; flex-wrap: wrap; justify-content: space-around;">
+        <div class="add-card" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary" style="margin-top: 15%; text-align: center;"
+                onclick="location.href = '/addfight'">
+                Add
+                Fight </button>
+        </div>
+
+        <div class="filters" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="margin-top: 15%; text-align: center;">
+                Filters
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="px-4 py-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="assigned" onchange="handleChanges()">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Assigned to a Card
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="unassigned" onchange="handleChanges()">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Not assigned to a Card
+                        </label>
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-primary" style=" margin-left: 15px;" onclick="getFights()"> Apply
+                </button>
+            </div>
+        </div>
+
+        <div class="weight-class" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="margin-top: 15%; text-align: center;">
+                Weight Class
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="px-4 py-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="strawweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Strawweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="flyweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Flyweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="bantamweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Bantamweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="featherweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Featherweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="lightweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Lightweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="welterweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Welterweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="middleweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Middleweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="light-heavyweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Light Heavyweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="heavyweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Heavyweight
+                        </label>
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-primary" style=" margin-left: 15px;" onclick="getFights()"> Apply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fights-display"
+        style="margin-top: 25px; display: flex; justify-content: space-around; flex-wrap: wrap;">
+    </div>
+
+    <div style="width: 90%; margin: auto; text-align: center;">
+        <p id="page-tracker" style="margin-top: 70px;"> </p>
+        <button class="btn btn-primary" onclick="previousPage()"> Previous Page </button>
+        <button class="btn btn-primary" onclick="nextPage()"> Next Page </button>
+    </div>
+
+    <div style="margin-top: 50px;"> </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let fightsDisplay = document.querySelector('.fights-display');
+        let currentPage = 1;
+
+        function handleChanges() {
+            document.getElementById('assigned').checked === true ? document.getElementById('unassigned').disabled = true : document.getElementById('unassigned').disabled = false;
+            document.getElementById('unassigned').checked === true ? document.getElementById('assigned').disabled = true : document.getElementById('assigned').disabled = false;
+        }
+
+        function getQueryParams() {
+            let queryString = '';
+
+            document.getElementById('strawweight').checked === true ? queryString = queryString + "SW=true&" : queryString = queryString;
+            document.getElementById('flyweight').checked === true ? queryString = queryString + "FLY=true&" : queryString = queryString;
+            document.getElementById('bantamweight').checked === true ? queryString = queryString + "BW=true&" : queryString = queryString;
+            document.getElementById('featherweight').checked === true ? queryString = queryString + "FW=true&" : queryString = queryString;
+            document.getElementById('lightweight').checked === true ? queryString = queryString + "LW=true&" : queryString = queryString;
+            document.getElementById('welterweight').checked === true ? queryString = queryString + "WW=true&" : queryString = queryString;
+            document.getElementById('middleweight').checked === true ? queryString = queryString + "MW=true&" : queryString = queryString;
+            document.getElementById('light-heavyweight').checked === true ? queryString = queryString + "LHW=true&" : queryString = queryString;
+            document.getElementById('heavyweight').checked === true ? queryString = queryString + "HW=true&" : queryString = queryString;
+            
+            document.getElementById('assigned').checked === true ? queryString = queryString + "assigned=true&" : queryString = queryString;
+            document.getElementById('unassigned').checked === true ? queryString = queryString + "unassigned=true&" : queryString = queryString;
+
+            return queryString;
+        }
+
+        async function getFights() {
+            //let queryString = getQueryParameters();
+            try {
+                let queryString = getQueryParams();
+                console.log(queryString);
+                const {
+                    data: { fights }
+                } = await axios.get(`/getfights?${queryString}`);
+
+                console.log(fights);
+
+                fightsDisplay.innerHTML = '';
+
+                if (Math.ceil(fights.length / 9) < currentPage) {
+                    currentPage = Math.ceil(fights.length / 9);
+                }
+
+                if (currentPage < 1) {
+                    currentPage = 1;
+                }
+
+                if (fights.length === 0) {
+                    document.getElementById('page-tracker').textContent = 'No results to display';
+                    document.getElementById('page-tracker').style.color = 'red'; 
+                }
+                else {
+                    document.getElementById('page-tracker').textContent = `Page ${currentPage} of ${Math.ceil(fights.length / 9)}`;
+                    document.getElementById('page-tracker').style.color = 'black';
+                }
+
+                let startIndex = (currentPage - 1) * 9;
+                for (let i = startIndex; i < startIndex + 9; i++) {
+                    const fightData = fights[i];
+                    const { _id: fightID } = fights[i];
+
+                    const redFighterData = await axios.get(`/getfighters/${fightData.redCorner}`);
+                    const blueFighterData = await axios.get(`/getfighters/${fightData.blueCorner}`);
+
+                    const redFighterName = `${redFighterData.data.fighter.firstName} ${redFighterData.data.fighter.lastName}`;
+                    const blueFighterName = `${blueFighterData.data.fighter.firstName} ${blueFighterData.data.fighter.lastName}`;
+                    const fightName = `${redFighterName} vs. ${blueFighterName}`;
+
+                    let tempCard = document.createElement('div');
+                    tempCard.innerHTML = `<div class="card-body" data-id="${fightID}">
+                                            <h5 class="card-title"> ${fightName} </h5>
+                                            <p class="card-text"> ${fightData.weightClass} Bout </p>
+                                            <a href="/viewfight/${fightID}" class="card-link">View</a>
+                                            <a href="/editfight/${fightID}" class="card-link">Edit</a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                                onclick="deleteFight(this.parentElement)"> Delete </button>
+                                            </div>`;
+
+                    tempCard.className = 'card';
+                    tempCard.style.width = '22rem';
+                    tempCard.style.display = 'block';
+                    tempCard.style.marginBottom = '20px';
+                    fightsDisplay.appendChild(tempCard);
+                }
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+
+        getFights();
+
+        function previousPage() {
+            currentPage = currentPage - 1;
+            getFights();
+        }
+
+        function nextPage() {
+            currentPage = currentPage + 1;
+            getFights();
+        }
+
+        function reset() {
+            currentPage = 1;
+            getFights();
+        }
+
+        async function deleteFight(node) {
+            try {
+                let fightID = node.getAttribute('data-id');
+                const {
+                    data: { fight }
+                } = await axios.delete(`/fights/${fightID}`);
+
+                console.log(fight);
+
+                await axios.patch(`/editfighter/${fight.redCorner}`, { isBooked: false, upcomingFight: '' });
+                await axios.patch(`/editfighter/${fight.blueCorner}`, { isBooked: false, upcomingFight: '' });
+
+                if (fight.assignedCard !== '') {
+                    const {
+                        data: { card }
+                    } = await axios.get(`/cards/${fight.assignedCard}`);
+
+                    if (card.mainCard.indexOf(fightID) !== -1) {
+                        let temp = card.mainCard;
+                        let index = temp.indexOf(fightID);
+                        temp.splice(index, 1);
+                        await axios.patch(`/editcard/${fight.assignedCard}`, { mainCard: temp });
+                    }
+
+                    if (card.prelimCard.indexOf(fightID) !== -1) {
+                        let temp = card.prelimCard;
+                        let index = temp.indexOf(fightID);
+                        temp.splice(index, 1);
+                        await axios.patch(`/editcard/${fight.assignedCard}`, { prelimCard: temp });
+                    }
+
+                    if (card.earlyPrelimCard.indexOf(fightID) !== -1) {
+                        let temp = card.earlyPrelimCard;
+                        let index = temp.indexOf(fightID);
+                        temp.splice(index, 1);
+                        await axios.patch(`/editcard/${fight.assignedCard}`, { earlyPrelimCard: temp });
+                    }
+                }
+                //getCards();
+                node.parentElement.remove();
+                currentPage = 1;
+                getFights();
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title> Card Builder </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"> UFC Card Builder </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Cards </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fighters"> Fighters </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fights"> Fights </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="display: block; text-align: center; margin-top: 10px; margin-bottom: 30px; width: 90%; margin: auto;">
+        View Fighter </h1>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Name: </h4>
+        <p id="fullName" style="text-align: center;"> </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Nickname: </h4>
+        <p id="nickname" style="text-align: center;"> </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Record: </h4>
+        <p id="record" style="text-align: center;"> </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Weight Class: </h4>
+        <p id="weight-class" style="text-align: center;"> </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Ranking Status: </h4>
+        <p id="rank" style="text-align: center;"> </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> UFC Stats Page: </h4>
+        <a href="" target="_blank" id="ufc-stats" style="display: block; text-align: center;"> </a>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Booking Status: </h4>
+        <p id="booking-status" style="text-align: center;"> </p>
+    </div>
+
+    <div style="width: 90%; margin: auto; margin-top: 30px; text-align: center;">
+        <h4 style="display: block; text-align: center;"> Upcoming Fight: </h4>
+        <div id="upcoming-fight" style="margin: auto; display: flex; justify-content: center;"> </div>
+    </div>
+
+    <div style="margin-top: 50px;"></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let url = window.location.href;
+        let urlParts = url.split('/');
+        let fighterID = urlParts[urlParts.length - 1];
+
+        async function getFighterInfo() {
+            try {
+                const {
+                    data: { fighter }
+                } = await axios.get(`/getfighters/${fighterID}`);
+
+                document.getElementById('fullName').textContent = `${fighter.firstName} ${fighter.lastName}`;
+                document.getElementById('nickname').textContent = fighter.nickname;
+                document.getElementById('record').textContent = `${fighter.wins}-${fighter.losses}-${fighter.draws} ${fighter.noContests}NC`;
+                document.getElementById('weight-class').textContent = fighter.weightClass;
+
+                if (fighter.isRanked === true) {
+                    document.getElementById('rank').textContent = 'Ranked';
+                }
+                else {
+                    document.getElementById('rank').textContent = 'Not Ranked';
+                }
+
+                if (fighter.ufcStats !== '') {
+                    document.getElementById('ufc-stats').href = fighter.ufcStats;
+                    document.getElementById('ufc-stats').textContent = `${fighter.firstName} ${fighter.lastName} Statistics`;
+                }
+
+                if (fighter.isBooked === true) {
+                    document.getElementById('booking-status').textContent = 'Booked';
+                }
+                else {
+                    document.getElementById('booking-status').textContent = 'Not Booked';
+                }
+
+                const {
+                    data: { fight }
+                } = await axios.get(`/getfights/${fighter.upcomingFight}`);
+
+                const redFighterData = await axios.get(`/getfighters/${fight.redCorner}`);
+                const blueFighterData = await axios.get(`/getfighters/${fight.blueCorner}`);
+
+                const redFighterName = `${redFighterData.data.fighter.firstName} ${redFighterData.data.fighter.lastName}`;
+                const blueFighterName = `${blueFighterData.data.fighter.firstName} ${blueFighterData.data.fighter.lastName}`;
+                const fightName = `${redFighterName} vs. ${blueFighterName}`;
+
+                let tempCard = document.createElement('div');
+                tempCard.innerHTML = `<div class="card-body" data-id="${fight._id}">
+                                            <h5 class="card-title"> ${fightName} </h5>
+                                            <p class="card-text"> ${fight.weightClass} Bout </p>
+                                            <a href="/viewfight/${fight._id}" class="card-link">View</a>`;
+
+                tempCard.className = 'card';
+                tempCard.style.width = '22rem';
+                tempCard.style.display = 'block';
+                tempCard.style.marginTop = '10px';
+                document.getElementById('upcoming-fight').appendChild(tempCard);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        getFighterInfo();
+    </script>
+</body>
+
+</html>

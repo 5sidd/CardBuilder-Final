@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title> Card Builder </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"> UFC Card Builder </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Cards </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fighters"> Fighters </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fights"> Fights </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="display: block; text-align: center; margin-top: 10px;"> Edit Fight </h1>
+
+    <form class="needs-validation" style="margin-top: 15px;">
+        <div
+            style="width: 90%; margin: auto; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: red; font-size: 20px;">
+            Red Corner </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px;">
+            <label for="red-first-name" class="form-label"> First Name: </label>
+            <input type="text" class="form-control" id="red-first-name" maxlength="100">
+            <div style="color: red; display: none" id="red-first-name-error">
+                Please provide the first name of the red corner
+            </div>
+        </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px">
+            <label for="red-last-name" class="form-label"> Last Name: </label>
+            <input type="text" class="form-control" id="red-last-name" maxlength="100">
+            <div style="color: red; display: none" id="red-last-name-error">
+                Please provide the last name of the red corner
+            </div>
+        </div>
+    </form>
+
+
+    <div
+        style="margin: auto; margin-top: 20px; width: 90%; display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="search-red"
+            onclick="selected('red')">
+            Search </button>
+
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="clear-red"
+            onclick="clearSearchDisplay('red')">
+            Clear Search </button>
+    </div>
+
+    <div class="red-search-display"
+        style="margin-top: 25px; display: flex; justify-content: space-around; flex-wrap: wrap;">
+    </div>
+
+    <form class="needs-validation" style="margin-top: 15px;">
+        <div
+            style="width: 90%; margin: auto; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: blue; font-size: 20px;">
+            Blue Corner </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px;">
+            <label for="blue-first-name" class="form-label"> First Name: </label>
+            <input type="text" class="form-control" id="blue-first-name" maxlength="100">
+            <div style="color: red; display: none" id="blue-first-name-error">
+                Please provide the first name of the blue corner
+            </div>
+        </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px">
+            <label for="blue-last-name" class="form-label"> Last Name: </label>
+            <input type="text" class="form-control" id="blue-last-name" maxlength="100">
+            <div style="color: red; display: none" id="blue-last-name-error">
+                Please provide the last name of the blue corner
+            </div>
+        </div>
+    </form>
+
+    <div
+        style="margin: auto; margin-top: 20px; width: 90%; display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="search-blue"
+            onclick="selected('blue')">
+            Search </button>
+
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="clear-blue"
+            onclick="clearSearchDisplay('blue')">
+            Clear Search </button>
+    </div>
+
+    <div class="blue-search-display"
+        style="margin-top: 25px; display: flex; justify-content: space-around; flex-wrap: wrap;">
+    </div>
+
+    <form class="needs-validation" style="margin-top: 15px;">
+        <div
+            style="width: 90%; margin: auto; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: green; font-size: 20px;">
+            Assign Card </div>
+
+        <div style="width: 90%; margin: auto; margin-top: 10px; font-size: 12.5px">
+            Note: This is an optional section.
+        </div>
+
+        <div style="width: 90%; margin: auto;">
+            <div style="margin-top: 15px;"> Card Section: </div>
+            <select class="form-select" id="card-section" aria-label="Default select example" style="display: block;">
+                <option value="1">Main Card</option>
+                <option value="2">Preliminary Card</option>
+                <option value="3">Early Preliminary Card</option>
+            </select>
+        </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px;">
+            <label for="card-name" class="form-label"> Card Name: </label>
+            <input type="text" class="form-control" id="card-name" maxlength="100">
+            <div style="color: red; display: none" id="card-name-error">
+                Please provide a card name
+            </div>
+        </div>
+    </form>
+
+    <div
+        style="margin: auto; margin-top: 20px; width: 90%; display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="search-cards"
+            onclick="getCards()">
+            Search </button>
+
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="clear-cards"
+            onclick="clearCardsDisplay()">
+            Clear Search </button>
+    </div>
+
+    <div class="cards-display" style="margin-top: 25px; display: flex; justify-content: space-around; flex-wrap: wrap;">
+    </div>
+
+    <div style="margin: auto; margin-top: 20px; width: 90%; text-align: center; font-size: 20px;"> Selected Fighters:
+    </div>
+
+    <div class="display-fight" style="margin-top: 25px; display: flex; justify-content:space-around; flex-wrap: wrap;">
+        <div id="display-red"> </div>
+        <div id="display-blue"> </div>
+    </div>
+
+    <div id="displayed-fight-error" style="margin-top: 10px; color: red; text-align: center;"> </div>
+
+    <div style="margin-top: 20px;">
+        <select id="weight-class" style="display: block; margin: auto;">
+            <option value="1"> Select Weight Class </option>
+            <option value="2"> Strawweight </option>
+            <option value="3"> Flyweight </option>
+            <option value="4"> Bantamweight </option>
+            <option value="5"> Featherweight </option>
+            <option value="6"> Lightweight </option>
+            <option value="7"> Welterweight </option>
+            <option value="8"> Middleweight </option>
+            <option value="9"> Light Heavyweight </option>
+            <option value="10"> Heavyweight </option>
+        </select>
+    </div>
+
+    <div id="weight-class-error" style="color: red; margin-top: 10px; text-align: center;"> </div>
+
+    <div style="margin: auto; margin-top: 20px; width: 90%; text-align: center; font-size: 20px;"> Selected Card:
+    </div>
+
+    <div class="display-card" style="margin-top: 25px; display: flex; justify-content:space-around; flex-wrap: wrap;">
+        <div id="selected-card"> </div>
+    </div>
+
+    <div style="margin: auto; margin-top: 20px; width: 90%;">
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="add-fight"
+            onclick="editFightValidation()">
+            Edit Fight </button>
+    </div>
+
+    <div id="general-error" style="text-align: center; color: red; margin-top: 10px;"> </div>
+    <div id="success-message" style="text-align: center; color: green; display: none;"> Fight has been successfully
+        updated! </div>
+
+    <div style="margin-top: 75px;"> </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let redDisplay = document.querySelector('.red-search-display');
+        let blueDisplay = document.querySelector('.blue-search-display');
+        let cardsDisplay = document.querySelector('.cards-display');
+        let displayFight = document.querySelector('.display-fight');
+
+        let redSelected = true;
+        let blueSelected = true;
+
+        let redFighter;
+        let blueFighter;
+
+        let selectedCard;
+        let cardIsSelected = false;
+
+        let url = window.location.href;
+        let urlParts = url.split('/');
+        let currentFightID = urlParts[urlParts.length - 1];
+
+        async function prefillData() {
+            try {
+
+                const {
+                    data: { fight }
+                } = await axios.get(`/getfights/${currentFightID}`);
+
+                fight.assignedCard !== '' ? cardIsSelected = true : cardIsSelected = false;
+
+                const redFighterData = await axios.get(`/getfighters/${fight.redCorner}`);
+                const blueFighterData = await axios.get(`/getfighters/${fight.blueCorner}`);
+
+                redFighter = redFighterData.data.fighter;
+                blueFighter = blueFighterData.data.fighter;
+
+                let redCard = document.getElementById('display-red');
+                redCard.innerHTML = `<div class="card-body" data-id="${redFighterData.data.fighter._id}" id="Red">
+                                <h5 class="card-title" style="text-decoration: underline; text-underline-offset: 2.5px; text-decoration-color:red"> ${redFighterData.data.fighter.firstName} ${redFighterData.data.fighter.lastName}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"> ${redFighterData.data.fighter.weightClass} </h6>
+                                <p class="card-text"> ${redFighterData.data.fighter.wins}-${redFighterData.data.fighter.losses}-${redFighterData.data.fighter.draws} ${redFighterData.data.fighter.noContests}NC </p>
+                                <a href="/viewfighter/${redFighterData.data.fighter._id}" class="card-link">View</a>
+                                <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                    onclick="clearCornerDisplay(this.parentElement)"> Remove </button>
+                                </div>`;
+
+                redCard.className = 'card';
+                redCard.style.width = '22rem';
+                redCard.style.display = 'block';
+                redCard.style.marginBottom = '20px';
+
+
+                let blueCard = document.getElementById('display-blue');
+                blueCard.innerHTML = `<div class="card-body" data-id="${blueFighterData.data.fighter._id}" id="Blue">
+                                <h5 class="card-title" style="text-decoration: underline; text-underline-offset: 2.5px; text-decoration-color:blue"> ${blueFighterData.data.fighter.firstName} ${blueFighterData.data.fighter.lastName}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"> ${blueFighterData.data.fighter.weightClass} </h6>
+                                <p class="card-text"> ${blueFighterData.data.fighter.wins}-${blueFighterData.data.fighter.losses}-${blueFighterData.data.fighter.draws} ${blueFighterData.data.fighter.noContests}NC </p>
+                                <a href="/viewfighter/${blueFighterData.data.fighter._id}" class="card-link">View</a>
+                                <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                    onclick="clearCornerDisplay(this.parentElement)"> Remove </button>
+                                </div>`;
+
+                blueCard.className = 'card';
+                blueCard.style.width = '22rem';
+                blueCard.style.display = 'block';
+                blueCard.style.marginBottom = '20px';
+
+                let weights = ['Strawweight', 'Flyweight', 'Bantamweight', 'Featherweight', 'Lightweight', 'Welterweight', 'Middleweight', 'Light Heavyweight', 'Heavyweight'];
+                document.getElementById('weight-class').selectedIndex = weights.indexOf(fight.weightClass) + 1;
+
+                if (fight.assignedCard !== '') {
+                    console.log('card is assigned');
+                    const {
+                        data: { card }
+                    } = await axios.get(`/cards/${fight.assignedCard}`);
+
+                    let displayCard = document.getElementById('selected-card');
+                    let cardDate = card.eventDate.toString();
+                    cardDate = cardDate.substring(0, 10);
+                    let dateInfo = cardDate.split('-');
+
+                    let tempCard = document.createElement('div');
+                    tempCard.innerHTML = `<div class="card-body" data-id="${card._id}">
+                                            <h5 class="card-title"> ${card.eventName} </h5>
+                                            <h6 class="card-subtitle mb-2 text-muted"> ${dateInfo[1]}/${dateInfo[2]}/${dateInfo[0]} </h6>
+                                            <p class="card-text"> ${card.eventLocation} </p>
+                                            <a href="/viewcard/${card._id}" class="card-link">View</a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                            onclick="clearDisplayedCard()"> Remove </button>`;
+
+                    tempCard.className = 'card';
+                    tempCard.style.width = '22rem';
+                    tempCard.style.display = 'block';
+                    tempCard.style.marginBottom = '20px';
+
+                    displayCard.appendChild(tempCard);
+                    selectedCard = card;
+                }
+
+                console.log(cardIsSelected);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        prefillData();
+
+        function selected(color) {
+            console.log(color);
+
+            color === 'red' ? redDisplay.innerHTML = '' : blueDisplay.innerHTML = '';
+
+            const firstName = document.getElementById(`${color}-first-name`).value;
+            const lastName = document.getElementById(`${color}-last-name`).value;
+
+            firstName.trim() === '' ? document.getElementById(`${color}-first-name-error`).style.display = 'block' : document.getElementById(`${color}-first-name-error`).style.display = 'none';
+            lastName.trim() === '' ? document.getElementById(`${color}-last-name-error`).style.display = 'block' : document.getElementById(`${color}-last-name-error`).style.display = 'none';
+
+            if (firstName.trim() !== '' && lastName.trim() !== '') {
+                color === 'red' ? color = 'Red' : color = 'Blue';
+                getFighters(firstName, lastName, color);
+            }
+        }
+
+        async function getFighters(firstName, lastName, color) {
+            console.log(color, 'getFighters');
+            try {
+                const {
+                    data: { fighters }
+                } = await axios.get(`/getfighters?firstName=${firstName}&lastName=${lastName}`);
+
+                let currentDisplay;
+                color === 'Red' ? currentDisplay = redDisplay : currentDisplay = blueDisplay;
+
+                //console.log(fighters.length);
+                currentDisplay.innerHTML = '';
+                currentDisplay.style.color = 'black';
+
+                if (fighters.length === 0) {
+                    currentDisplay.textContent = 'No results to display';
+                    currentDisplay.style.color = 'red';
+                }
+
+                for (let i = 0; i < fighters.length; i++) {
+                    const fighterData = fighters[i];
+                    const { _id: fighterID } = fighters[i];
+                    //console.log(fighterID);
+
+                    let tempCard = document.createElement('div');
+                    tempCard.innerHTML = `<div class="card-body" data-id="${fighterID}" id=${color}>
+                                <h5 class="card-title"> ${fighterData.firstName} ${fighterData.lastName}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"> ${fighterData.weightClass} </h6>
+                                <p class="card-text"> ${fighterData.wins}-${fighterData.losses}-${fighterData.draws} ${fighterData.noContests}NC </p>
+                                <a href="/viewfighter/${fighterID}" class="card-link">View</a>
+                                <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                    onclick="placeFighter(this.parentElement)"> Select ${color} Corner </button>
+                                </div>`;
+
+                    tempCard.className = 'card';
+                    tempCard.style.width = '22rem';
+                    tempCard.style.display = 'block';
+                    tempCard.style.marginBottom = '20px';
+                    currentDisplay.appendChild(tempCard);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function placeFighter(parent) {
+            try {
+                const fighterID = parent.getAttribute('data-id');
+                const color = parent.getAttribute('id');
+
+                const {
+                    data: { fighter }
+                } = await axios.get(`/getfighters/${fighterID}`);
+
+                let tempCard;
+                color === 'Red' ? tempCard = document.getElementById('display-red') : tempCard = document.getElementById('display-blue');
+                color === 'Red' ? redSelected = true : blueSelected = true;
+                color === 'Red' ? redFighter = fighter : blueFighter = fighter;
+
+                tempCard.innerHTML = `<div class="card-body" data-id="${fighterID}" id=${color}>
+                                <h5 class="card-title" style="text-decoration: underline; text-underline-offset: 2.5px; text-decoration-color: ${color}"> ${fighter.firstName} ${fighter.lastName}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"> ${fighter.weightClass} </h6>
+                                <p class="card-text"> ${fighter.wins}-${fighter.losses}-${fighter.draws} ${fighter.noContests}NC </p>
+                                <a href="/viewfighter/${fighterID}" class="card-link">View</a>
+                                <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                    onclick="clearCornerDisplay(this.parentElement)"> Remove </button>
+                                </div>`;
+
+                tempCard.className = 'card';
+                tempCard.style.width = '22rem';
+                tempCard.style.display = 'block';
+                tempCard.style.marginBottom = '20px';
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        function clearSearchDisplay(color) {
+            let searchField;
+            color === 'red' ? searchField = redDisplay : searchField = blueDisplay;
+            searchField.innerHTML = '';
+        }
+
+        function clearCornerDisplay(parent) {
+            let fighter;
+            let color = parent.getAttribute('id');
+
+            color === 'Red' ? fighter = document.getElementById('display-red') : fighter = document.getElementById('display-blue');
+            color === 'Red' ? redSelected = false : blueSelected = false;
+
+            fighter.innerHTML = '';
+
+            fighter.removeAttribute('class');
+            fighter.removeAttribute('style');
+        }
+
+        async function getCards() {
+            if (document.getElementById('card-name').value === '') {
+                document.getElementById('card-name-error').style.display = 'block';
+                return;
+            }
+            try {
+                document.getElementById('card-name-error').style.display = 'none';
+                let cardName = document.getElementById('card-name').value;
+                const {
+                    data: { cards }
+                } = await axios.get(`/cards?cardName=${cardName}`);
+
+                cardsDisplay.innerHTML = '';
+                cardsDisplay.style.color = 'black';
+
+                if (cards.length === 0) {
+                    cardsDisplay.textContent = 'No results to display';
+                    cardsDisplay.style.color = 'red';
+                }
+
+                for (let i = 0; i < cards.length; i++) {
+                    const cardData = cards[i];
+                    const { _id: cardID } = cards[i];
+                    let cardDate = cards[i].eventDate.toString();
+                    cardDate = cardDate.substring(0, 10);
+                    let dateInfo = cardDate.split('-');
+
+                    let tempCard = document.createElement('div');
+                    tempCard.innerHTML = `<div class="card-body" data-id="${cardID}">
+                                            <h5 class="card-title"> ${cardData.eventName} </h5>
+                                            <h6 class="card-subtitle mb-2 text-muted"> ${dateInfo[1]}/${dateInfo[2]}/${dateInfo[0]} </h6>
+                                            <p class="card-text"> ${cardData.eventLocation} </p>
+                                            <a href="/viewcard/${cardID}" class="card-link">View</a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                            onclick="placeCard(this.parentElement)"> Select Card </button>`;
+
+                    tempCard.className = 'card';
+                    tempCard.style.width = '22rem';
+                    tempCard.style.display = 'block';
+                    tempCard.style.marginBottom = '20px';
+                    cardsDisplay.appendChild(tempCard);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        function clearCardsDisplay() {
+            cardsDisplay.innerHTML = '';
+        }
+
+        async function placeCard(parent) {
+            try {
+                const cardID = parent.getAttribute('data-id');
+                //console.log(cardID);
+
+                const {
+                    data: { card }
+                } = await axios.get(`/cards/${cardID}`);
+                selectedCard = card;
+                cardIsSelected = true;
+                console.log(card);
+                let cardDate = card.eventDate.toString();
+                cardDate = cardDate.substring(0, 10);
+                let dateInfo = cardDate.split('-');
+
+                let displayCard = document.getElementById('selected-card');
+                let cardSection = document.getElementById('selected-card-section');
+
+                let tempCard = document.createElement('div');
+                displayCard.innerHTML = `<div class="card-body" data-id="${cardID}">
+                                            <h5 class="card-title"> ${card.eventName} </h5>
+                                            <h6 class="card-subtitle mb-2 text-muted"> ${dateInfo[1]}/${dateInfo[2]}/${dateInfo[0]} </h6>
+                                            <p class="card-text"> ${card.eventLocation} </p>
+                                            <a href="/viewcard/${cardID}" class="card-link">View</a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                            onclick="clearDisplayedCard()"> Remove </button>`;
+
+                displayCard.className = 'card';
+                displayCard.style.width = '22rem';
+                displayCard.style.display = 'block';
+                displayCard.style.marginBottom = '20px';
+
+                //displayCard.appendChild(tempCard);
+                //displayCard.innerHTML = tempCard;
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        function clearDisplayedCard() {
+            let displayCard = document.getElementById('selected-card');
+            displayCard.innerHTML = '';
+            cardIsSelected = false;
+            displayCard.removeAttribute('class');
+            displayCard.removeAttribute('style');
+        }
+
+        async function editFightValidation() {
+            let displayError = document.getElementById('displayed-fight-error');
+            displayError.textContent = '';
+            document.getElementById('weight-class-error').textContent = '';
+            document.getElementById('general-error').textContent = '';
+
+            if (redSelected === false && blueSelected === false) {
+                displayError.textContent = 'Please select a red and blue corner';
+                //console.log('both')
+            }
+
+            if (redSelected === false && blueSelected === true) {
+                displayError.textContent = 'Please select a red corner';
+                //console.log('red')
+            }
+
+            if (redSelected === true && blueSelected === false) {
+                displayError.textContent = 'Please select a blue corner';
+                //console.log('blue');
+            }
+
+            if (redSelected === true && blueSelected === true) {
+                let redGender = redFighter.gender;
+                let blueGender = blueFighter.gender;
+                let redBookingStatus = redFighter.isBooked;
+                let blueBookingStatus = blueFighter.isBooked;
+                let weightClass = document.getElementById('weight-class').selectedIndex;
+
+                if (redGender === blueGender /*&& (!redBookingStatus) && (!blueBookingStatus)*/ && weightClass !== 0 && redFighter._id !== blueFighter._id) {
+                    editFight();
+                }
+
+                if (weightClass === 0) {
+                    document.getElementById('weight-class-error').textContent = 'Please provide a weight class';
+                }
+
+                if (redGender !== blueGender) {
+                    document.getElementById('general-error').textContent = 'Genders of both fighters must match';
+                }
+
+                if (redFighter._id === blueFighter._id) {
+                    document.getElementById('general-error').textContent = 'Red and Blue corners must be distinct';
+                }
+                /*
+                if (redBookingStatus) {
+                    document.getElementById('general-error').textContent = 'Red fighter is already booked';
+                }
+
+                if (blueBookingStatus) {
+                    document.getElementById('general-error').textContent = 'Blue fighter is already booked';
+                }
+                */
+            }
+        }
+
+        async function editFight() {
+            try {
+                console.log('editing fight');
+
+                let previousFightData = await axios.get(`/getfights/${currentFightID}`);
+                previousFightData = previousFightData.data.fight;
+
+                let previousRedFighter = await axios.get(`/getfighters/${previousFightData.redCorner}`);
+                previousRedFighter = previousRedFighter.data.fighter;
+
+                let previousBlueFighter = await axios.get(`/getfighters/${previousFightData.blueCorner}`);
+                previousBlueFighter = previousBlueFighter.data.fighter;
+
+                console.log(previousFightData);
+                console.log(previousRedFighter);
+                console.log(previousBlueFighter);
+
+                let validation = true;
+                document.getElementById('general-error').textContent = '';
+
+                if (previousRedFighter._id !== redFighter._id && redFighter.isBooked === true) {
+                    document.getElementById('general-error').textContent = 'Red fighter is already booked';
+                    validation = false;
+                }
+
+                if (previousBlueFighter._id !== blueFighter._id && blueFighter.isBooked === true) {
+                    document.getElementById('general-error').textContent = 'Blue fighter is already booked';
+                    validation = false;
+                }
+                console.log('validation: ', validation);
+
+                if (validation === true) {
+                    console.log('updating');
+                    
+                    if (previousRedFighter._id !== redFighter._id) {
+                        await axios.patch(`/editfighter/${previousRedFighter._id}`, { isBooked: false, upcomingFight: '' });
+                    }
+
+                    if (previousBlueFighter._id !== blueFighter._id) {
+                        await axios.patch(`/editfighter/${previousBlueFighter._id}`, { isBooked: false, upcomingFight: '' });
+                    }
+
+                    if ((previousFightData.assignedCard !== '' && cardIsSelected === false) || (previousFightData.assignedCard !== '' && cardIsSelected)) {
+                        const {
+                            data: { card }
+                        } = await axios.get(`/cards/${previousFightData.assignedCard}`);
+
+                        if (card.mainCard.indexOf(currentFightID) !== -1) {
+                            let temp = card.mainCard;
+                            let index = card.mainCard.indexOf(currentFightID);
+                            temp.splice(index, 1);
+                            axios.patch(`/editcard/${previousFightData.assignedCard}`, { mainCard: temp });
+                        }
+
+                        if (card.prelimCard.indexOf(currentFightID) !== -1) {
+                            let temp = card.prelimCard;
+                            let index = card.prelimCard.indexOf(currentFightID);
+                            temp.splice(index, 1);
+                            axios.patch(`/editcard/${previousFightData.assignedCard}`, { prelimCard: temp });
+                        }
+
+                        if (card.earlyPrelimCard.indexOf(currentFightID) !== -1) {
+                            let temp = card.earlyPrelimCard;
+                            let index = card.earlyPrelimCard.indexOf(currentFightID);
+                            temp.splice(index, 1);
+                            axios.patch(`/editcard/${previousFightData.assignedCard}`, { earlyPrelimCard: temp });
+                        }
+                    }
+
+                    let fightObject = {};
+                    fightObject.redCorner = redFighter._id;
+                    fightObject.blueCorner = blueFighter._id;
+                    fightObject.isAssigned = false;
+                    fightObject.assignedCard = '';
+
+                    let fightWeight = document.getElementById('weight-class');
+                    let fightWeightData = fightWeight.options[fightWeight.selectedIndex].text;
+                    fightObject.weightClass = fightWeightData;
+
+                    if (cardIsSelected === true) {
+                        fightObject.isAssigned = true;
+                        fightObject.assignedCard = selectedCard._id;
+                    }
+
+                    const {
+                        data: { fight }
+                    } = await axios.patch(`/editfight/${currentFightID}`, fightObject);
+                    await axios.patch(`/editfighter/${redFighter._id}`, { isBooked: true, upcomingFight: fight._id });
+                    await axios.patch(`/editfighter/${blueFighter._id}`, { isBooked: true, upcomingFight: fight._id });
+
+                    if ((cardIsSelected === true)) {
+                        let cardSection = document.getElementById('card-section');
+                        const {
+                            data: { card }
+                        } = await axios.get(`/cards/${fightObject.assignedCard}`);
+
+                        if (cardSection.selectedIndex === 0 && card.mainCard.indexOf(fight._id) === -1) {
+                            let main = card.mainCard;
+                            main.push(fight._id);
+                            await axios.patch(`/editcard/${selectedCard._id}`, { mainCard: main });
+                        }
+                        else if (cardSection.selectedIndex === 1 && card.prelimCard.indexOf(fight._id) === -1) {
+                            let prelims = card.prelimCard;
+                            prelims.push(fight._id);
+                            await axios.patch(`/editcard/${selectedCard._id}`, { prelimCard: prelims });
+                        }
+                        else if (cardSection.selectedIndex === 2 && card.earlyPrelimCard.indexOf(fight._id) === -1) {
+                            let earlyPrelims = card.earlyPrelimCard;
+                            earlyPrelims.push(fight._id);
+                            await axios.patch(`/editcard/${selectedCard._id}`, { earlyPrelimCard: earlyPrelims });
+                        }
+                    }
+
+                    document.getElementById('success-message').style.display = 'block';
+
+                    setTimeout(() => {
+                        document.getElementById('success-message').style.display = 'none';
+                    }, 3000);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+    </script>
+</body>
+
+</html>

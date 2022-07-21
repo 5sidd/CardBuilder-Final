@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title> Card Builder </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"> UFC Card Builder </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Cards </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fighters"> Fighters </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fights"> Fights </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="display: block; text-align: center; margin-top: 10px;"> Add Fight Card </h1>
+
+    <form class="needs-validation" style="margin-top: 15px;">
+        <div class="mb-3" style="width: 90%; margin: auto;">
+            <label for="eventName" class="form-label"> Event Name: </label>
+            <input type="text" class="form-control" id="eventName" maxlength="100">
+            <div style="color: red; display: none" id="name-error">
+                Please provide an event name
+            </div>
+        </div>
+
+        <div class="mb-3" style="width: 90%; margin: auto; margin-top: 30px">
+            <label for="eventLocation" class="form-label"> Event Location: </label>
+            <input type="text" class="form-control" id="eventLocation" maxlength="100">
+            <div style="color: red; display: none" id="location-error">
+                Please provide an event location
+            </div>
+        </div>
+
+        <div class="mb-3"
+            style="width: 90%; margin: auto; display: flex; justify-content: space-around; margin-top: 30px; flex-wrap: wrap;">
+
+            <div>
+                <label for="cardType" class="form-label" style="margin-right: 10px;"> Card Type: </label>
+                <select class="form-select" id="cardType" aria-label="Default select example">
+                    <option value="1">PPV</option>
+                    <option value="2">Non-PPV</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="eventDate" class="form-label" style="margin-right: 10px;"> Event Date: </label>
+                <input type="date" id="eventDate">
+                <div style="color: red; display: none" id="date-error">
+                    Please provide an event date
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div style="margin: auto; margin-top: 20px; width: 90%;">
+        <button class="btn btn-primary" type="submit" style="display: block; margin: auto;" id="submitCard"
+            onclick="submitted()">Add Card</button>
+    </div>
+
+    <div style="margin: auto; margin-top: 20px; width: 90%; color: green; text-align: center; display: none;"
+        id="success-message">
+        Card has been sucessfully added!
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let today = new Date();
+
+        let dd = today.getDate();
+        let mm = today.getMonth() + 1;
+        let yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("eventDate").setAttribute("min", today);
+        //document.getElementById("eventDate").value = today;
+
+        let eventName = document.getElementById('eventName');
+        let eventLocation = document.getElementById('eventLocation');
+        let cardType = document.getElementById('cardType');
+        let cardTypeData = cardType.options[cardType.selectedIndex].text;
+        let eventDate = document.getElementById('eventDate');
+
+        function submitted() {
+            let submission = {
+                eventName: eventName.value,
+                eventLocation: eventLocation.value,
+                cardType: cardTypeData,
+                eventDate: eventDate.value
+            }
+
+            console.log(submission);
+
+            if (submission.eventName.trim() === "") {
+                document.getElementById('name-error').style.display = 'block';
+            }
+            else {
+                document.getElementById('name-error').style.display = 'none';
+            }
+
+            if (submission.eventLocation.trim() === "") {
+                document.getElementById('location-error').style.display = 'block';
+            }
+            else {
+                document.getElementById('location-error').style.display = 'none';
+            }
+
+            if (submission.eventDate.trim() === "") {
+                document.getElementById('date-error').style.display = 'block';
+            }
+            else {
+                document.getElementById('date-error').style.display = 'none';
+            }
+
+            if (submission.eventName.trim().length > 0 && submission.eventLocation.trim().length > 0 && submission.eventDate) {
+                eventName.value = '';
+                eventLocation.value = '';
+                eventDate.value = '';
+
+                addCard(submission);
+
+                document.getElementById('success-message').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('success-message').style.display = 'none';
+                }, 3000);
+            }
+
+            async function addCard(submission) {
+                try {
+                    await axios.post('/addCard', submission);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

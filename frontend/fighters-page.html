@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="frontend/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title> Card Builder </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"> UFC Card Builder </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Cards </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fighters"> Fighters </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/fights"> Fights </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="beginning"
+        style="margin-top: 3%; height: auto; display: flex; flex-wrap: wrap; justify-content: space-around;">
+        <div class="add-card" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary" style="margin-top: 15%; text-align: center;"
+                onclick="location.href = '/addfighter'">
+                Add
+                Fighter </button>
+        </div>
+
+        <div class="filters" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="margin-top: 15%; text-align: center;">
+                Apply Filters
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="px-4 py-3">
+                    <div>
+                        <input type="text" class="form-control" id="first-name" placeholder="First Name"
+                            maxlength="100">
+                    </div>
+
+                    <div>
+                        <input type="text" class="form-control" id="last-name" placeholder="Last Name"
+                            style="margin-top: 15px;" maxlength="100">
+                    </div>
+
+                    <div>
+                        <input type="text" class="form-control" id="nickname" placeholder="Nickname"
+                            style="margin-top: 15px;" maxlength="100">
+                    </div>
+
+                    <div class="form-check" style="margin-top: 15px;">
+                        <input type="checkbox" class="form-check-input" id="ranked" onchange="handleChanges()">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Ranked
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="unranked" onchange="handleChanges()">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Unranked
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="booked" onchange="handleChanges()">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Booked
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="not-booked" onchange="handleChanges()">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Not Booked
+                        </label>
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-primary" style=" margin-left: 15px;" onclick="reset()"> Apply
+                </button>
+            </div>
+        </div>
+
+        <div class="weight-class" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="margin-top: 15%; text-align: center;">
+                Weight Class
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="px-4 py-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="strawweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Strawweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="flyweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Flyweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="bantamweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Bantamweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="featherweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Featherweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="lightweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Lightweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="welterweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Welterweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="middleweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Middleweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="light-heavyweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Light Heavyweight
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="heavyweight">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Heavyweight
+                        </label>
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-primary" style=" margin-left: 15px;" onclick="reset()"> Apply
+                </button>
+            </div>
+        </div>
+
+        <div class="gender" style="width: 200px; text-align: center; height: 100px;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="margin-top: 15%; text-align: center;">
+                Gender
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="px-4 py-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="male">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Male
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="female">
+                        <label class="form-check-label" for="dropdownCheck">
+                            Female
+                        </label>
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-primary" style=" margin-left: 15px;" onclick="reset()"> Apply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fighters-display"
+        style="margin-top: 25px; display: flex; justify-content: space-around; flex-wrap: wrap;"></div>
+
+    <div class="fighters-display"
+        style="margin-top: 25px; display: flex; justify-content: space-around; flex-wrap: wrap;"></div>
+
+    <div style="width: 90%; margin: auto; text-align: center;">
+        <p id="page-tracker" style="margin-top: 70px;"> </p>
+        <button class="btn btn-primary" onclick="previousPage()"> Previous Page </button>
+        <button class="btn btn-primary" onclick="nextPage()"> Next Page </button>
+    </div>
+
+    <div style="margin-top: 50px;"> </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let fightersDisplay = document.querySelector('.fighters-display');
+        let currentPage = 1;
+
+        function handleChanges() {
+            document.getElementById('ranked').checked === true ? document.getElementById('unranked').disabled = true : document.getElementById('unranked').disabled = false;
+            document.getElementById('unranked').checked === true ? document.getElementById('ranked').disabled = true : document.getElementById('ranked').disabled = false;
+
+            document.getElementById('booked').checked === true ? document.getElementById('not-booked').disabled = true : document.getElementById('not-booked').disabled = false;
+            document.getElementById('not-booked').checked === true ? document.getElementById('booked').disabled = true : document.getElementById('booked').disabled = false;
+        }
+
+        function getQueryParameters() {
+            let queryString = '';
+
+            document.getElementById('strawweight').checked === true ? queryString = queryString + "SW=true&" : queryString = queryString;
+            document.getElementById('flyweight').checked === true ? queryString = queryString + "FLY=true&" : queryString = queryString;
+            document.getElementById('bantamweight').checked === true ? queryString = queryString + "BW=true&" : queryString = queryString;
+            document.getElementById('featherweight').checked === true ? queryString = queryString + "FW=true&" : queryString = queryString;
+            document.getElementById('lightweight').checked === true ? queryString = queryString + "LW=true&" : queryString = queryString;
+            document.getElementById('welterweight').checked === true ? queryString = queryString + "WW=true&" : queryString = queryString;
+            document.getElementById('middleweight').checked === true ? queryString = queryString + "MW=true&" : queryString = queryString;
+            document.getElementById('light-heavyweight').checked === true ? queryString = queryString + "LHW=true&" : queryString = queryString;
+            document.getElementById('heavyweight').checked === true ? queryString = queryString + "HW=true&" : queryString = queryString;
+
+            document.getElementById('male').checked === true ? queryString = queryString + "male=true&" : queryString = queryString;
+            document.getElementById('female').checked === true ? queryString = queryString + "female=true&" : queryString = queryString;
+
+            (document.getElementById('ranked').checked === true) ? queryString = queryString + "ranked=true&" : queryString = queryString;
+            (document.getElementById('unranked').checked === true) ? queryString = queryString + "unranked=true&" : queryString = queryString;
+
+            (document.getElementById('booked').checked === true) ? queryString = queryString + "booked=true&" : queryString = queryString;
+            (document.getElementById('not-booked').checked === true) ? queryString = queryString + "notBooked=true&" : queryString = queryString;
+
+            document.getElementById('first-name').value.trim() !== '' ? queryString = queryString + `firstName=${document.getElementById('first-name').value}&` : queryString = queryString;
+            document.getElementById('last-name').value.trim() !== '' ? queryString = queryString + `lastName=${document.getElementById('last-name').value}&` : queryString = queryString;
+            document.getElementById('nickname').value.trim() !== '' ? queryString = queryString + `nickname=${document.getElementById('nickname').value}&` : queryString = queryString;
+
+            return queryString;
+        }
+
+        async function getFighters() {
+            let queryString = getQueryParameters();
+
+            try {
+                const {
+                    data: { fighters }
+                } = await axios.get(`/getfighters?${queryString}`);
+
+                //console.log(cards);
+
+                fightersDisplay.innerHTML = '';
+
+                if (Math.ceil(fighters.length / 15) < currentPage) {
+                    currentPage = Math.ceil(fighters.length / 15);
+                }
+
+                if (currentPage < 1) {
+                    currentPage = 1;
+                }
+
+                if (fighters.length === 0) {
+                    document.getElementById('page-tracker').textContent = 'No results to display';
+                    document.getElementById('page-tracker').style.color = 'red';
+                }
+                else {
+                    document.getElementById('page-tracker').textContent = `Page ${currentPage} of ${Math.ceil(fighters.length / 15)}`;
+                    document.getElementById('page-tracker').style.color = 'black';
+                }
+
+                let startIndex = (currentPage - 1) * 15;
+                for (let i = startIndex; i < startIndex + 15; i++) {
+                    const fighterData = fighters[i];
+                    const { _id: fighterID } = fighters[i];
+                    console.log(fighterID);
+
+                    let tempCard = document.createElement('div');
+                    tempCard.innerHTML = `<div class="card-body" data-id="${fighterID}">
+                                            <h5 class="card-title"> ${fighterData.firstName} ${fighterData.lastName}</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted"> ${fighterData.weightClass} </h6>
+                                            <p class="card-text"> ${fighterData.wins}-${fighterData.losses}-${fighterData.draws} ${fighterData.noContests}NC </p>
+                                            <a href="/viewfighter/${fighterID}" class="card-link">View</a>
+                                            <a href="/editfighter/${fighterID}" class="card-link">Edit</a>
+                                            <button type="submit" class="btn btn-primary" style="margin-left: 25px;"
+                                                onclick="deleteFighter(this.parentElement)"> Delete </button>
+                                            </div>`;
+
+                    tempCard.className = 'card';
+                    tempCard.style.width = '22rem';
+                    tempCard.style.display = 'block';
+                    tempCard.style.marginBottom = '20px';
+                    fightersDisplay.appendChild(tempCard);
+                }
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+
+        getFighters();
+
+        function nextPage() {
+            currentPage = currentPage + 1;
+            getFighters();
+        }
+
+        function previousPage() {
+            currentPage = currentPage - 1;
+            getFighters();
+        }
+
+        function reset() {
+            currentPage = 1;
+            getFighters();
+        }
+
+        async function deleteFighter(node) {
+            try {
+                let fighterID = node.getAttribute('data-id');
+                let deletedFighter = await axios.delete(`/fighters/${fighterID}`);
+                deletedFighter = deletedFighter.data.fighter;
+
+                if (deletedFighter.isBooked === true) {
+                    const {
+                        data: { fight }
+                    } = await axios.get(`/getfights/${deletedFighter.upcomingFight}`);
+
+                    if (fight.redCorner === fighterID) {
+                        await axios.patch(`/editfighter/${fight.blueCorner}`, { isBooked: false, upcomingFight: '' });
+                    }
+                    else {
+                        await axios.patch(`/editfighter/${fight.redCorner}`, { isBooked: false, upcomingFight: '' });
+                    }
+
+                    if (fight.assignedCard !== '') {
+                        const {
+                            data: { card }
+                        } = await axios.get(`/cards/${fight.assignedCard}`);
+
+                        if (card.mainCard.indexOf(fight._id) !== -1) {
+                            let temp = card.mainCard;
+                            let index = temp.indexOf(fight._id);
+                            temp.splice(index, 1);
+                            await axios.patch(`/editcard/${fight.assignedCard}`, { mainCard: temp });
+                        }
+
+                        if (card.prelimCard.indexOf(fight._id) !== -1) {
+                            let temp = card.prelimCard;
+                            let index = temp.indexOf(fight._id);
+                            temp.splice(index, 1);
+                            await axios.patch(`/editcard/${fight.assignedCard}`, { prelimCard: temp });
+                        }
+
+                        if (card.earlyPrelimCard.indexOf(fight._id) !== -1) {
+                            let temp = card.earlyPrelimCard;
+                            let index = temp.indexOf(fight._id);
+                            temp.splice(index, 1);
+                            await axios.patch(`/editcard/${fight.assignedCard}`, { earlyPrelimCard: temp });
+                        }
+                    }
+
+                    await axios.delete(`/fights/${fight._id}`);
+                }
+
+                //getCards();
+                node.parentElement.remove();
+                currentPage = 1;
+                getFighters();
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -24,7 +24,7 @@ const start = async() => {
 }
 start();
 
-const pathPrefix = 'C:/Users/siddp/CardBuilder-2023';
+const pathPrefix = 'C:/Users/siddp/CardBuilder-Final';
 
 // Cards CRUD Functions
 app.get('/', async (req, res) => {

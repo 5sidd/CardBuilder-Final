@@ -1,16 +1,14 @@
 const express = require('express');
 const app = express();
 
-const connectDB = require('../db/connect');
+const connectDB = require('./db/connect');
 require('dotenv').config();
-const notFound = require('../middleware/not-found');
+const notFound = require('./middleware/not-found');
 const path = require('path');
 
-const Fighter = require('../models/Fighter');
-const Fight = require('../models/Fight');
-const Card = require('../models/Card');
-
-
+const Fighter = require('./models/Fighter');
+const Fight = require('./models/Fight');
+const Card = require('./models/Card');
 
 app.use(express.json());
 
@@ -24,12 +22,10 @@ const start = async() => {
 }
 start();
 
-const pathPrefix = 'C:/Users/siddp/CardBuilder-Final';
-
 // Cards CRUD Functions
 app.get('/', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/cards-page.html'));
+        res.sendFile(path.join(__dirname, '/public/cards-page.html'));
     }
     catch(error) {
         console.log(error);
@@ -92,7 +88,7 @@ app.get('/cards/:id', async (req, res) => {
 
 app.get('/addcard', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/cards-add-page.html'));
+        res.sendFile(path.join(__dirname, '/public/cards-add-page.html'));
     }
     catch(error) {
         console.log(error);
@@ -130,7 +126,7 @@ app.delete('/cards/:id', async (req, res) => {
 
 app.get('/editcard/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/cards-edit-page.html'));
+        res.sendFile(path.join(__dirname, '/public/cards-edit-page.html'));
     }
     catch (error) {
         res.status(500).json({ error });
@@ -159,7 +155,7 @@ app.patch('/editcard/:id', async (req, res) => {
 
 app.get('/viewcard/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/cards-view-page.html'));
+        res.sendFile(path.join(__dirname, '/public/cards-view-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -170,7 +166,7 @@ app.get('/viewcard/:id', async (req, res) => {
 // Fighters CRUD
 app.get('/fighters', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/fighters-page.html'));
+        res.sendFile(path.join(__dirname, '/public/fighters-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -240,7 +236,7 @@ app.get('/getfighters/:id', async (req, res) => {
 
 app.get('/addfighter', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/fighters-add-page.html'));
+        res.sendFile(path.join(__dirname, '/public/fighters-add-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -261,7 +257,7 @@ app.post('/addfighter', async (req, res) => {
 
 app.get('/editfighter/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/fighters-edit-page.html'));
+        res.sendFile(path.join(__dirname, '/public/fighters-edit-page.html'));
     }
     catch (error) {
         res.status(500).json({ error });
@@ -307,7 +303,7 @@ app.delete('/fighters/:id', async (req, res) => {
 
 app.get('/viewfighter/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/fighters-view-page.html'));
+        res.sendFile(path.join(__dirname, '/public/fighters-view-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -318,7 +314,7 @@ app.get('/viewfighter/:id', async (req, res) => {
 //Fight CRUD
 app.get('/fights', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/fights-page.html'));
+        res.sendFile(path.join(__dirname, '/public/fights-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -328,7 +324,7 @@ app.get('/fights', async (req, res) => {
 
 app.get('/addfight', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/fights-add-page.html'));
+        res.sendFile(path.join(__dirname, '/public/fights-add-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -413,7 +409,7 @@ app.delete('/fights/:id', async (req, res) => {
 
 app.get('/editfight/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/fights-edit-page.html'));
+        res.sendFile(path.join(__dirname, '/public/fights-edit-page.html'));
     }
     catch (error) {
         res.status(500).json({ error });
@@ -442,7 +438,7 @@ app.patch('/editfight/:id', async (req, res) => {
 
 app.get('/viewfight/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/public/fights-view-page.html'));
+        res.sendFile(path.join(__dirname, '/public/fights-view-page.html'));
     }
     catch (error) {
         console.log(error);

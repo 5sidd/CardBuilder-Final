@@ -29,7 +29,7 @@ const pathPrefix = 'C:/Users/siddp/CardBuilder-2023';
 // Cards CRUD Functions
 app.get('/', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/cards-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/cards-page.html'));
     }
     catch(error) {
         console.log(error);
@@ -92,7 +92,7 @@ app.get('/cards/:id', async (req, res) => {
 
 app.get('/addcard', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/cards-add-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/cards-add-page.html'));
     }
     catch(error) {
         console.log(error);
@@ -130,7 +130,7 @@ app.delete('/cards/:id', async (req, res) => {
 
 app.get('/editcard/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/cards-edit-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/cards-edit-page.html'));
     }
     catch (error) {
         res.status(500).json({ error });
@@ -159,7 +159,7 @@ app.patch('/editcard/:id', async (req, res) => {
 
 app.get('/viewcard/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/cards-view-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/cards-view-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -170,7 +170,7 @@ app.get('/viewcard/:id', async (req, res) => {
 // Fighters CRUD
 app.get('/fighters', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/fighters-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/fighters-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -240,7 +240,7 @@ app.get('/getfighters/:id', async (req, res) => {
 
 app.get('/addfighter', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/fighters-add-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/fighters-add-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -261,7 +261,7 @@ app.post('/addfighter', async (req, res) => {
 
 app.get('/editfighter/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/fighters-edit-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/fighters-edit-page.html'));
     }
     catch (error) {
         res.status(500).json({ error });
@@ -307,7 +307,7 @@ app.delete('/fighters/:id', async (req, res) => {
 
 app.get('/viewfighter/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/fighters-view-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/fighters-view-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -318,7 +318,7 @@ app.get('/viewfighter/:id', async (req, res) => {
 //Fight CRUD
 app.get('/fights', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/fights-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/fights-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -328,7 +328,7 @@ app.get('/fights', async (req, res) => {
 
 app.get('/addfight', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/fights-add-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/fights-add-page.html'));
     }
     catch (error) {
         console.log(error);
@@ -413,7 +413,7 @@ app.delete('/fights/:id', async (req, res) => {
 
 app.get('/editfight/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/fights-edit-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/fights-edit-page.html'));
     }
     catch (error) {
         res.status(500).json({ error });
@@ -442,7 +442,7 @@ app.patch('/editfight/:id', async (req, res) => {
 
 app.get('/viewfight/:id', async (req, res) => {
     try {
-        res.sendFile(path.join(pathPrefix, '/frontend/fights-view-page.html'));
+        res.sendFile(path.join(pathPrefix, '/public/fights-view-page.html'));
     }
     catch (error) {
         console.log(error);

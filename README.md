@@ -6,4 +6,4 @@ The full description for this project is located in the Google Doc linked here: 
 
 You can demo this project here: https://ufc-cardbuilder.herokuapp.com/
 
-UPDATE: Due to the fact that Heroku no longer provides free deployment services, the above link will no longer work. As an alternative, you can demo this project by cloning this repository. Make sure that all dependencies are installed by running "npm install" in the root of the repository.
+UPDATE: Due to the fact that Heroku no longer provides free deployment services, the above link will no longer work. As an alternative, you can demo this project at this new link: https://ufc-cardbuilder.onrender.com/
